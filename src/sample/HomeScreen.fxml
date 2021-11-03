@@ -19,7 +19,7 @@
    <children>
       <Pane layoutY="-14.0" prefHeight="169.0" prefWidth="1305.0" style="-fx-background-color: pink; -fx-border-color: red;">
          <children>
-            <Text fill="#3ebdd7" layoutX="45.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AIMS" wrappingWidth="139.13623046875">
+            <Text fill="#3ebdd7" layoutX="105.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AIMS" wrappingWidth="139.13623046875">
                <font>
                   <Font size="59.0" />
                </font>
@@ -37,6 +37,11 @@
                </image>
             </ImageView>
             <Text fill="#3ebdd7" layoutX="1071.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 media" />
+            <ImageView fitHeight="68.0" fitWidth="84.0" layoutX="29.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/media-icon.jpg" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <GridPane layoutX="40.0" layoutY="172.0" prefHeight="572.0" prefWidth="1214.0" style="-fx-border-color: pink; -fx-grid-lines-visible: pink;">
