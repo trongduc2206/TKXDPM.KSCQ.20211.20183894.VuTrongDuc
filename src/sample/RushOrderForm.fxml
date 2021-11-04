@@ -10,7 +10,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="768.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RushOrderForm">
    <children>
       <ImageView fitHeight="68.0" fitWidth="84.0" layoutX="57.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
@@ -53,36 +52,40 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Label layoutX="278.0" layoutY="397.0" text="Confirm Address" textFill="#3ebdd7">
+      <Label layoutX="285.0" layoutY="375.0" text="Address" textFill="#3ebdd7">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextArea layoutX="460.0" layoutY="359.0" prefHeight="106.0" prefWidth="492.0" />
-      <Label layoutX="276.0" layoutY="489.0" text="Time" textFill="#3ebdd7">
+      <Label layoutX="283.0" layoutY="443.0" text="Time" textFill="#3ebdd7">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="553.0" layoutY="490.0" prefHeight="31.0" prefWidth="81.0" />
-      <Label layoutX="476.0" layoutY="490.0" text="Month" textFill="#3ebdd7">
+      <ChoiceBox layoutX="544.0" layoutY="443.0" prefHeight="31.0" prefWidth="81.0" />
+      <Label layoutX="475.0" layoutY="444.0" text="Month" textFill="#3ebdd7">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="689.0" layoutY="491.0" text="Day" textFill="#3ebdd7">
+      <Label layoutX="678.0" layoutY="444.0" text="Day" textFill="#3ebdd7">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="733.0" layoutY="491.0" prefHeight="31.0" prefWidth="81.0" />
-      <ChoiceBox layoutX="352.0" layoutY="489.0" prefHeight="31.0" prefWidth="81.0" />
-      <Label layoutX="278.0" layoutY="565.0" text="Instruction" textFill="#3ebdd7">
+      <ChoiceBox layoutX="719.0" layoutY="444.0" prefHeight="31.0" prefWidth="81.0" />
+      <ChoiceBox layoutX="340.0" layoutY="443.0" prefHeight="31.0" prefWidth="81.0" />
+      <Label layoutX="280.0" layoutY="529.0" text="Instruction" textFill="#3ebdd7">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextArea layoutX="460.0" layoutY="551.0" prefHeight="106.0" prefWidth="492.0" />
-      <Button layoutX="536.0" layoutY="694.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="318.0" style="-fx-background-color: #3ebdd7; -fx-font-weight: bold;" text="Confirm Rush Delivery" textFill="WHITE" />
+      <TextArea layoutX="466.0" layoutY="491.0" prefHeight="106.0" prefWidth="492.0" />
+      <Button layoutX="449.0" layoutY="643.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="318.0" style="-fx-background-color: #3ebdd7; -fx-font-weight: bold;" text="Confirm Rush Delivery" textFill="WHITE" />
+      <Text fill="#3ebdd7" layoutX="475.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bach Khoa">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -16,7 +16,7 @@
             <Font size="59.0" />
          </font>
       </Text>
-      <Pane layoutX="41.0" layoutY="132.0" prefHeight="569.0" prefWidth="865.0" style="-fx-border-color: #3ebdd7; -fx-background-color: pink;">
+      <Pane layoutX="40.0" layoutY="133.0" prefHeight="569.0" prefWidth="865.0" style="-fx-border-color: #3ebdd7; -fx-background-color: pink;">
          <children>
             <Pane layoutX="11.0" layoutY="14.0" prefHeight="200.0" prefWidth="844.0" style="-fx-border-color: #3ebdd7; -fx-border-radius: 12;">
                <children>
@@ -50,7 +50,7 @@
             <Font size="21.0" />
          </font>
       </Text>
-      <Button layoutX="980.0" layoutY="313.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="257.0" style="-fx-background-color: #3ebdd7; -fx-font-weight: bold;" text="Button" textFill="#fff4f4" />
+      <Button layoutX="980.0" layoutY="313.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="257.0" style="-fx-background-color: #3ebdd7; -fx-font-weight: bold;" text="Place Order" textFill="#fff4f4" />
       <Text fill="#f50b0b" layoutX="1231.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VAT (10%)">
          <font>
             <Font size="13.0" />
