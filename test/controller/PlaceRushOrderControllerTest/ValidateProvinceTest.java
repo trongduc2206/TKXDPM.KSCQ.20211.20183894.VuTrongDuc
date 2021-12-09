@@ -28,5 +28,4 @@ public class ValidateProvinceTest {
         //then
         assertEquals(expected, rs);
     }
-    //test
 }
