@@ -1,5 +1,6 @@
 package views.screen.shipping;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -8,15 +9,16 @@ import java.util.ResourceBundle;
 
 import controller.PlaceOrderController;
 import common.exception.InvalidDeliveryInfoException;
+import controller.PlaceRushOrderController;
 import entity.invoice.Invoice;
 import entity.order.Order;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utils.Configs;
@@ -25,6 +27,8 @@ import views.screen.invoice.InvoiceScreenHandler;
 import views.screen.popup.PopupScreen;
 
 public class ShippingScreenHandler extends BaseScreenHandler implements Initializable {
+	@FXML
+	private ImageView aimsImage;
 
 	@FXML
 	private Label screenTitle;
@@ -44,11 +48,44 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 	@FXML
 	private ComboBox<String> province;
 
+	@FXML
+	private Label backLabel;
+
+	@FXML
+	private DatePicker datePicker;
+
+	@FXML
+	private Label deliveryDate;
+
 	private Order order;
+
+	private boolean isRushOrder;
 
 	public ShippingScreenHandler(Stage stage, String screenPath, Order order) throws IOException {
 		super(stage, screenPath);
 		this.order = order;
+		// fix relative image path caused by fxml
+		File file = new File("assets/images/Logo.png");
+		Image im = new Image(file.toURI().toString());
+		aimsImage.setImage(im);
+
+		// on mouse clicked, we back to home
+		aimsImage.setOnMouseClicked(e -> {
+			homeScreenHandler.show();
+		});
+
+		backLabel.setOnMouseClicked(e -> {
+			getPreviousScreen().show();
+		});
+	}
+
+	public void setIsRushOrder(boolean isRushOrder){
+		this.isRushOrder = isRushOrder;
+	}
+
+	public void setDatePickerVisible(boolean isVisible){
+		this.datePicker.setVisible(isVisible);
+		this.deliveryDate.setVisible(isVisible);
 	}
 
 	@Override
@@ -73,11 +110,20 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 		messages.put("address", address.getText());
 		messages.put("instructions", instructions.getText());
 		messages.put("province", province.getValue());
+		messages.put("date", (datePicker.getValue()!=null)?datePicker.getValue().toString():null);
 		// process and validate delivery info
-		getBController().processDeliveryInfo(messages);
-
+		try {
+			if (isRushOrder) {
+				getRController().processDeliveryInfo(messages);
+			} else {
+				getBController().processDeliveryInfo(messages);
+			}
+		} catch (InterruptedException e){
+			PopupScreen.error(e.getMessage());
+			return;
+		}
 		// calculate shipping fees
-		int shippingFees = getBController().calculateShippingFee(order);
+		int shippingFees = isRushOrder ? getRController().calculateShippingFee(order) :getBController().calculateShippingFee(order);
 		order.setShippingFees(shippingFees);
 		order.setDeliveryInfo(messages);
 		
@@ -93,6 +139,10 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 
 	public PlaceOrderController getBController(){
 		return (PlaceOrderController) super.getBController();
+	}
+
+	public PlaceRushOrderController getRController(){
+		return (PlaceRushOrderController) super.getBController();
 	}
 
 	public void notifyError(){

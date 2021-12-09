@@ -10,11 +10,13 @@ import java.util.logging.Logger;
 import common.exception.MediaNotAvailableException;
 import common.exception.PlaceOrderException;
 import controller.PlaceOrderController;
+import controller.PlaceRushOrderController;
 import controller.ViewCartController;
 import entity.cart.CartMedia;
 import entity.order.Order;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,6 +55,9 @@ public class CartScreenHandler extends BaseScreenHandler {
 
 	@FXML
 	private Button btnPlaceOrder;
+
+	@FXML
+	private CheckBox rushOrderCheck;
 
 	public CartScreenHandler(Stage stage, String screenPath) throws IOException {
 		super(stage, screenPath);
@@ -109,6 +114,10 @@ public class CartScreenHandler extends BaseScreenHandler {
 		try {
 			// create placeOrderController and process the order
 			PlaceOrderController placeOrderController = new PlaceOrderController();
+			if(rushOrderCheck.isSelected()){
+				LOGGER.info("rush order is selected");
+				placeOrderController = (PlaceRushOrderController) new PlaceRushOrderController();
+			}
 			if (placeOrderController.getListCartMedia().size() == 0){
 				PopupScreen.error("You don't have anything to place");
 				return;
@@ -128,6 +137,13 @@ public class CartScreenHandler extends BaseScreenHandler {
 			ShippingScreenHandler.setHomeScreenHandler(homeScreenHandler);
 			ShippingScreenHandler.setScreenTitle("Shipping Screen");
 			ShippingScreenHandler.setBController(placeOrderController);
+			if(rushOrderCheck.isSelected()){
+				ShippingScreenHandler.setIsRushOrder(true);
+				ShippingScreenHandler.setDatePickerVisible(true);
+			} else {
+				ShippingScreenHandler.setIsRushOrder(false);
+				ShippingScreenHandler.setDatePickerVisible(false);
+			}
 			ShippingScreenHandler.show();
 
 		} catch (MediaNotAvailableException e) {
