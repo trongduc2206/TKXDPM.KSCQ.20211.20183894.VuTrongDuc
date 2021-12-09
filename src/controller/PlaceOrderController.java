@@ -17,9 +17,10 @@ import views.screen.popup.PopupScreen;
 
 /**
  * This class controls the flow of place order usecase in our AIMS project
+ *
  * @author nguyenlm
  */
-public class PlaceOrderController extends BaseController{
+public class PlaceOrderController extends BaseController {
 
     /**
      * Just for logging purpose
@@ -28,24 +29,26 @@ public class PlaceOrderController extends BaseController{
 
     /**
      * This method checks the avalibility of product when user click PlaceOrder button
+     *
      * @throws SQLException
      */
-    public void placeOrder() throws SQLException{
+    public void placeOrder() throws SQLException {
         Cart.getCart().checkAvailabilityOfProduct();
     }
 
     /**
      * This method creates the new Order based on the Cart
+     *
      * @return Order
      * @throws SQLException
      */
-    public Order createOrder() throws SQLException{
+    public Order createOrder() throws SQLException {
         Order order = new Order();
         for (Object object : Cart.getCart().getListMedia()) {
             CartMedia cartMedia = (CartMedia) object;
-            OrderMedia orderMedia = new OrderMedia(cartMedia.getMedia(), 
-                                                   cartMedia.getQuantity(), 
-                                                   cartMedia.getPrice());    
+            OrderMedia orderMedia = new OrderMedia(cartMedia.getMedia(),
+                    cartMedia.getQuantity(),
+                    cartMedia.getPrice());
             order.getlstOrderMedia().add(orderMedia);
         }
         return order;
@@ -53,6 +56,7 @@ public class PlaceOrderController extends BaseController{
 
     /**
      * This method creates the new Invoice based on order
+     *
      * @param order
      * @return Invoice
      */
@@ -62,50 +66,96 @@ public class PlaceOrderController extends BaseController{
 
     /**
      * This method takes responsibility for processing the shipping info from user
+     *
      * @param info
      * @throws InterruptedException
      * @throws IOException
      */
-    public void processDeliveryInfo(HashMap info) throws InterruptedException, IOException{
+    public void processDeliveryInfo(HashMap info) throws InterruptedException, IOException {
         LOGGER.info("Process Delivery Info");
         LOGGER.info(info.toString());
         validateDeliveryInfo(info);
     }
-    
+
     /**
-   * The method validates the info
-   * @param info
-   * @throws InterruptedException
-   * @throws IOException
-   */
-    public void validateDeliveryInfo(HashMap<String, String> info) throws InterruptedException, IOException{
-    	
+     * The method validates the info
+     *
+     * @param info
+     * @throws InterruptedException
+     * @throws IOException
+     */
+    public void validateDeliveryInfo(HashMap<String, String> info) throws InterruptedException, IOException {
+        if(validateName(info.get("name"))){
+            throw new InterruptedException("Name is invalid");
+        }
+        if(validateAddress(info.get("address"))){
+            throw new InterruptedException("Address is invalid");
+        }
+        if(validatePhoneNumber(info.get("phone"))){
+            throw new InterruptedException("Phone number is invalid");
+        }
     }
-    
+
+    /**
+     * The method validates the phone number
+     * @param phoneNumber phone number to validate
+     * @return
+     */
     public boolean validatePhoneNumber(String phoneNumber) {
-    	// TODO: your work
-    	return false;
+        // check the phone number is not null or empty
+        if(phoneNumber.isEmpty() || phoneNumber == null) return false;
+        // check the phone number has 10 digits
+        if (phoneNumber.length() != 10) return false;
+        // check the phone number start with 0
+        if (!phoneNumber.startsWith("0")) return false;
+        // check the phone number contains only number
+        try {
+            Integer.parseInt(phoneNumber);
+        } catch (NumberFormatException e) {
+    	    return false;
+        }
+        return true;
     }
-    
+
+    /**
+     * The method validate the name
+     * @param name name to validate
+     * @return
+     */
     public boolean validateName(String name) {
-    	// TODO: your work
-    	return false;
+        // check the name is not null or empty
+        if(name == null || name.isEmpty() ){
+            return false;
+        }
+        //check the name does not contain special characters or number
+        if(!name.matches("^[a-zA-Z\\s]*$")) {
+            return false;
+        }
+        return true;
     }
-    
+
     public boolean validateAddress(String address) {
-    	// TODO: your work
-    	return false;
+        //check the address is not null or empty
+        if(address == null || address.isEmpty()) {
+            return false;
+        }
+        // check the address does not contain special characters
+        if(!address.matches("^[a-zA-Z0-9\\s]*$")) {
+            return false;
+        }
+        return true;
     }
-    
+
 
     /**
      * This method calculates the shipping fees of order
+     *
      * @param order
      * @return shippingFee
      */
-    public int calculateShippingFee(Order order){
+    public int calculateShippingFee(Order order) {
         Random rand = new Random();
-        int fees = (int)( ( (rand.nextFloat()*10)/100 ) * order.getAmount() );
+        int fees = (int) (((rand.nextFloat() * 10) / 100) * order.getAmount());
         LOGGER.info("Order Amount: " + order.getAmount() + " -- Shipping Fees: " + fees);
         return fees;
     }

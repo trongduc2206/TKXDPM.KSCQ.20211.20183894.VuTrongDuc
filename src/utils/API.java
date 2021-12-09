@@ -20,49 +20,61 @@ import java.util.logging.Logger;
 import entity.payment.CreditCard;
 import entity.payment.PaymentTransaction;
 
+/**
+ * Class cung cap cac phuong thuc giup gui request len server va nhan du lieu tra ve
+ * Date 07/12/2021
+ * @author Vu Trong Duc - 20183894
+ * @version 1.0
+ */
 public class API {
-
-	public static DateFormat DATE_FORMATER = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	/**
+	 * Thuoc tinh giup log ra thong tin tren console
+	 */
 	private static Logger LOGGER = Utils.getLogger(Utils.class.getName());
 
+	/**
+	 * Phuong thuc giup goi cac API dang GET
+	 * @param url path to server resource
+	 * @param token authenticate
+	 * @return response: phan hoi tu server (dang String)
+	 * @throws Exception
+	 */
 	public static String get(String url, String token) throws Exception {
-		LOGGER.info("Request URL: " + url + "\n");
-		URL line_api_url = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) line_api_url.openConnection();
-		conn.setDoInput(true);
-		conn.setDoOutput(true);
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Content-Type", "application/json");
-		conn.setRequestProperty("Authorization", "Bearer " + token);
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		String inputLine;
-		StringBuilder respone = new StringBuilder(); // ising StringBuilder for the sake of memory and performance
-		while ((inputLine = in.readLine()) != null)
-			System.out.println(inputLine);
-		respone.append(inputLine + "\n");
-		in.close();
-		LOGGER.info("Respone Info: " + respone.substring(0, respone.length() - 1).toString());
-		return respone.substring(0, respone.length() - 1).toString();
+		// Vu Trong Duc - 20183894
+		//setup ket noi http
+		HttpURLConnection conn = getHttpURLConnection(url, token, "GET");
+		// tra ve du lieu tra ve tu server
+		return readResponse(conn);
 	}
 
-	int var;
-
-	public static String post(String url, String data
-//			, String token
-	) throws IOException {
+	/**
+	 * Phuong thuc giup goi cac API dang POST
+	 * @param url path to server resource
+	 * @param data request body
+	 * @return response: phan hoi tu server (dang String)
+	 * @throws IOException
+	 */
+	public static String post(String url, String data, String token) throws IOException {
+		// Vu Trong Duc - 20183894
 		allowMethods("PATCH");
-		URL line_api_url = new URL(url);
-		String payload = data;
-		LOGGER.info("Request Info:\nRequest URL: " + url + "\n" + "Payload Data: " + payload + "\n");
-		HttpURLConnection conn = (HttpURLConnection) line_api_url.openConnection();
-		conn.setDoInput(true);
-		conn.setDoOutput(true);
-		conn.setRequestMethod("PATCH");
-		conn.setRequestProperty("Content-Type", "application/json");
-//		conn.setRequestProperty("Authorization", "Bearer " + token);
+		//setup ket noi http
+		HttpURLConnection conn = getHttpURLConnection(url, token, "PATCH");
+
+		//gui du lieu
 		Writer writer = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-		writer.write(payload);
+		writer.write(data);
 		writer.close();
+		//tra ve du lieu tra ve tu server
+		return readResponse(conn);
+	}
+
+	/**
+	 * Phuong thuc giup doc response
+	 * @param conn http url connection
+	 * @return response: phan hoi tu server (dang String)
+	 * @throws IOException
+	 */
+	private static String readResponse(HttpURLConnection conn) throws IOException {
 		BufferedReader in;
 		String inputLine;
 		if (conn.getResponseCode() / 100 == 2) {
@@ -78,7 +90,12 @@ public class API {
 		return response.toString();
 	}
 
+	/**
+	 * Phuong thuc mo method cho ket noi http
+	 * @param methods methods are allowed
+	 */
 	private static void allowMethods(String... methods) {
+		// Vu Trong Duc - 20183894
 		try {
 			Field methodsField = HttpURLConnection.class.getDeclaredField("methods");
 			methodsField.setAccessible(true);
@@ -96,6 +113,27 @@ public class API {
 		} catch (NoSuchFieldException | IllegalAccessException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	/**
+	 * Phuong thuc giup khoi tao ket noi http den server
+	 * @param url path to server resource
+	 * @param token authenticate
+	 * @param method method to create connection
+	 * @return HttpURLConnection
+	 * @throws IOException
+	 */
+	private static HttpURLConnection getHttpURLConnection(String url, String token, String method) throws IOException {
+		// Vu Trong Duc - 20183894
+		LOGGER.info("Request URL: " + url + "\n");
+		URL line_api_url = new URL(url);
+		HttpURLConnection conn = (HttpURLConnection) line_api_url.openConnection();
+		conn.setDoInput(true);
+		conn.setDoOutput(true);
+		conn.setRequestMethod(method);
+		conn.setRequestProperty("Content-Type", "application/json");
+		conn.setRequestProperty("Authorization", "Bearer " + token);
+		return conn;
 	}
 
 }

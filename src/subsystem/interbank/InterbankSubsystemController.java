@@ -43,8 +43,9 @@ public class InterbankSubsystemController {
 		Map<String, Object> requestMap = new MyMap();
 		requestMap.put("version", VERSION);
 		requestMap.put("transaction", transaction);
-
-		String responseText = interbankBoundary.query(Configs.PROCESS_TRANSACTION_URL, generateData(requestMap));
+		//demo token
+		String token = "token-demo";
+		String responseText = interbankBoundary.query(Configs.PROCESS_TRANSACTION_URL, generateData(requestMap), token);
 		MyMap response = null;
 		try {
 			response = MyMap.toMyMap(responseText, 0);
