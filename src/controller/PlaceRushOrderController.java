@@ -36,7 +36,7 @@ public class PlaceRushOrderController extends PlaceOrderController{
             throw new InterruptedException("Delivery date must be after today");
         }
     }
-
+    //Vu Trong Duc - 20183894
     public boolean validateProvince(String province){
         if(province == null || province.isEmpty()){
             return false;
