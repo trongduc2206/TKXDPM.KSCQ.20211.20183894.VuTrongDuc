@@ -27,9 +27,15 @@
             <Font name="Segoe UI" size="24.0" />
          </font>
       </Label>
-      <VBox layoutX="114.0" layoutY="163.0" prefHeight="500.0" prefWidth="500.0">
+      <VBox layoutX="114.0" layoutY="163.0" prefHeight="500.0" prefWidth="477.0">
          <children>
-            <RadioButton disable="true" mnemonicParsing="false" selected="true" text="Credit Card">
+      <!--            <RadioButton disable="true" mnemonicParsing="false" selected="true" text="Credit Card">-->
+            <RadioButton fx:id="creditCard" mnemonicParsing="false" text="Credit Card">
+               <font>
+                  <Font name="Calibri" size="24.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="domesticDebitCard" mnemonicParsing="false" text="Domestic Debit Card">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>
@@ -58,7 +64,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </TextField>
-            <Label prefHeight="50.0" prefWidth="243.0" text="Expiration date:">
+            <Label fx:id="dateLabel" prefHeight="50.0" prefWidth="243.0" text="Expiration date:">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>
@@ -68,7 +74,7 @@
                   <Font name="Calibri" size="24.0" />
                </font>
             </TextField>
-            <Label text="Card security code:">
+            <Label fx:id="securityLabel" text="Card security code:">
                <font>
                   <Font name="Calibri" size="24.0" />
                </font>

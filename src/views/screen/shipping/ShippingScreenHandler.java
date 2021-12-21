@@ -123,9 +123,10 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 			return;
 		}
 		// calculate shipping fees
+		order.setDeliveryInfo(messages);
 		int shippingFees = isRushOrder ? getRController().calculateShippingFee(order) :getBController().calculateShippingFee(order);
 		order.setShippingFees(shippingFees);
-		order.setDeliveryInfo(messages);
+
 		
 		// create invoice screen
 		Invoice invoice = getBController().createInvoice(order);

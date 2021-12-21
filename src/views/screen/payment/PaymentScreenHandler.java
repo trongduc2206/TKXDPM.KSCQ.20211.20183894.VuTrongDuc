@@ -8,10 +8,10 @@ import entity.cart.Cart;
 import common.exception.PlaceOrderException;
 import entity.invoice.Invoice;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -26,6 +26,18 @@ public class PaymentScreenHandler extends BaseScreenHandler {
 
 	@FXML
 	private ImageView loadingImage;
+
+	@FXML
+	private RadioButton creditCard;
+
+	@FXML
+	private RadioButton domesticDebitCard;
+
+	@FXML
+	private Label dateLabel;
+
+	@FXML
+	private Label securityLabel;
 
 	private Invoice invoice;
 
@@ -43,6 +55,28 @@ public class PaymentScreenHandler extends BaseScreenHandler {
 				((PaymentController) getBController()).emptyCart();
 			} catch (Exception exp) {
 				System.out.println(exp.getStackTrace());
+			}
+		});
+
+		ToggleGroup group = new ToggleGroup();
+		creditCard.setToggleGroup(group);
+		creditCard.setSelected(true);
+		domesticDebitCard.setToggleGroup(group);
+
+		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				if(group.getSelectedToggle() != null){
+					RadioButton button = (RadioButton) group.getSelectedToggle();
+					if(button.getText().equals("Domestic Debit Card")){
+						dateLabel.setText("Valid From");
+						securityLabel.setText("Issuing Bank");
+					} else {
+						dateLabel.setText("Expiration Date");
+						securityLabel.setText("Card security code");
+					}
+
+				}
 			}
 		});
 	}

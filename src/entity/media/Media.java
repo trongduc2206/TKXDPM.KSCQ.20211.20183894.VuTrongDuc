@@ -12,10 +12,10 @@ import utils.Utils;
 
 /**
  * The general media class, for another media it can be done by inheriting this class
- * @author nguyenlm
+ * @author ducvt
  */
 public class Media {
-
+    //VU TRONG DUC - 20183894
     private static Logger LOGGER = Utils.getLogger(Media.class.getName());
 
     protected Statement stm;
@@ -27,6 +27,10 @@ public class Media {
     protected int quantity;
     protected String type;
     protected String imageURL;
+    protected float weight;
+    protected float height;
+    protected float length;
+    protected float width;
 
     public Media() throws SQLException{
         stm = AIMSDB.getConnection().createStatement();
@@ -79,7 +83,12 @@ public class Media {
                 .setCategory(res.getString("category"))
                 .setMediaURL(res.getString("imageUrl"))
                 .setPrice(res.getInt("price"))
-                .setType(res.getString("type"));
+                .setType(res.getString("type"))
+                    .setWeight(res.getFloat("weight"))
+                    .setHeight(res.getFloat("height"))
+                    .setLength(res.getFloat("length"))
+                    .setWidth(res.getFloat("width"));
+
             medium.add(media);
         }
         return medium;
@@ -153,6 +162,46 @@ public class Media {
     public Media setType(String type) {
         this.type = type;
         return this;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+    // VU TRONG DUC - 20183894
+    public Media setWeight(float weight) {
+        this.weight = weight;
+        return this;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public Media setHeight(float height) {
+        this.height = height;
+        return this;
+    }
+
+    public float getLength() {
+        return length;
+    }
+
+    public Media setLength(float length) {
+        this.length = length;
+        return this;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public Media setWidth(float width) {
+        this.width = width;
+        return this;
+    }
+    //Vu Trong Duc - 20183894
+    public int getAlternativeWeight(){
+        return (int) (this.length*this.height*this.width)/6000;
     }
 
     @Override

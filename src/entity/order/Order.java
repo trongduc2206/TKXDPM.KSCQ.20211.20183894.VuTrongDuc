@@ -61,4 +61,23 @@ public class Order {
         return (int) (amount + (Configs.PERCENT_VAT/100)*amount);
     }
 
+    public int getTotalWeight(){
+        float total = 0;
+        for(Object object : lstOrderMedia){
+            OrderMedia om = (OrderMedia) object;
+            total += ((OrderMedia) object).getMedia().getWeight();
+        }
+        return (int) total;
+    }
+    //VU TRONG DUC - 20183894
+    public int getTotalAlternativeWeight(){
+        int total = 0;
+        for(Object object : lstOrderMedia){
+            OrderMedia om = (OrderMedia) object;
+            total += ((OrderMedia) object).getMedia().getAlternativeWeight();
+        }
+        return total;
+    }
+
+
 }
