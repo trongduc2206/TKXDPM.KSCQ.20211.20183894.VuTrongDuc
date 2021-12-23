@@ -4,6 +4,7 @@ import controller.PlaceOrderController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import utils.Strategy1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,7 +13,8 @@ public class ValidateNameTest {
     private PlaceOrderController placeOrderController;
     @BeforeEach
     void setUp() {
-        placeOrderController = new PlaceOrderController();
+        Strategy1 strategy1 = new Strategy1();
+        placeOrderController = new PlaceOrderController(strategy1);
     }
     @ParameterizedTest
     @CsvSource({

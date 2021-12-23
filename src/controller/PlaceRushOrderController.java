@@ -3,6 +3,7 @@ package controller;
 import entity.cart.Cart;
 import entity.cart.CartMedia;
 import entity.order.Order;
+import utils.Strategy1;
 import views.screen.popup.PopupScreen;
 
 import java.io.IOException;
@@ -24,6 +25,10 @@ public class PlaceRushOrderController extends PlaceOrderController{
      */
     private static Logger LOGGER = utils.Utils.getLogger(PlaceRushOrderController.class.getName());
     // Vu Trong Duc - 20183894
+
+    public PlaceRushOrderController(Strategy1 strategy1){
+        super(strategy1);
+    }
 
     /**
      * Method kiem tra tinh hop le thong tin giao hang
