@@ -114,12 +114,10 @@ public class CartScreenHandler extends BaseScreenHandler {
 	public void requestToPlaceOrder() throws SQLException, IOException {
 		try {
 			// create placeOrderController and process the order
-			Strategy1 strategy1 = new Strategy1();
-			PlaceOrderController placeOrderController = new PlaceOrderController(strategy1);
+			PlaceOrderController placeOrderController = new PlaceOrderController();
 			if(rushOrderCheck.isSelected()){
 				LOGGER.info("rush order is selected");
-//				Strategy1 strategy1 = new Strategy1();
-				placeOrderController = (PlaceRushOrderController) new PlaceRushOrderController(strategy1);
+				placeOrderController = (PlaceRushOrderController) new PlaceRushOrderController();
 			}
 			if (placeOrderController.getListCartMedia().size() == 0){
 				PopupScreen.error("You don't have anything to place");
@@ -141,11 +139,9 @@ public class CartScreenHandler extends BaseScreenHandler {
 			ShippingScreenHandler.setScreenTitle("Shipping Screen");
 			ShippingScreenHandler.setBController(placeOrderController);
 			if(rushOrderCheck.isSelected()){
-				ShippingScreenHandler.setIsRushOrder(true);
-				ShippingScreenHandler.setDatePickerVisible(true);
+				ShippingScreenHandler.setRushConfig(true);
 			} else {
-				ShippingScreenHandler.setIsRushOrder(false);
-				ShippingScreenHandler.setDatePickerVisible(false);
+				ShippingScreenHandler.setRushConfig(false);
 			}
 			ShippingScreenHandler.show();
 

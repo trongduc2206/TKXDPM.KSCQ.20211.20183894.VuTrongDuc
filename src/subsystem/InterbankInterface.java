@@ -3,7 +3,10 @@ package subsystem;
 import common.exception.PaymentException;
 import common.exception.UnrecognizedException;
 import entity.payment.CreditCard;
+import entity.payment.PaymentCard;
 import entity.payment.PaymentTransaction;
+
+import java.io.IOException;
 
 /**
  * The {@code InterbankInterface} class is used to communicate with the
@@ -26,8 +29,8 @@ public interface InterbankInterface {
 	 * @throws UnrecognizedException if responded with an unknown error code or
 	 *                               something goes wrong
 	 */
-	public abstract PaymentTransaction payOrder(CreditCard card, int amount, String contents)
-			throws PaymentException, UnrecognizedException;
+	public abstract PaymentTransaction payOrder(PaymentCard card, int amount, String contents)
+			throws PaymentException, UnrecognizedException, IOException;
 
 	/**
 	 * Refund, and then return the payment transaction

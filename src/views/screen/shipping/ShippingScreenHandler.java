@@ -57,6 +57,9 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 	@FXML
 	private Label deliveryDate;
 
+	@FXML
+	private Label rushLabel;
+
 	private Order order;
 
 	private boolean isRushOrder;
@@ -77,15 +80,21 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 		backLabel.setOnMouseClicked(e -> {
 			getPreviousScreen().show();
 		});
+
+		rushLabel.setOnMouseClicked(e -> {
+			try {
+				PopupScreen.infor("This is a Rush Order. Click Get Back at the bottom of the screen to unselect Rush Order");
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
+		});
 	}
 
-	public void setIsRushOrder(boolean isRushOrder){
-		this.isRushOrder = isRushOrder;
-	}
-
-	public void setDatePickerVisible(boolean isVisible){
-		this.datePicker.setVisible(isVisible);
-		this.deliveryDate.setVisible(isVisible);
+	public void setRushConfig(boolean isRush){
+		this.datePicker.setVisible(isRush);
+		this.deliveryDate.setVisible(isRush);
+		this.rushLabel.setVisible(isRush);
+		this.isRushOrder = isRush;
 	}
 
 	@Override
@@ -113,11 +122,7 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 		messages.put("date", (datePicker.getValue()!=null)?datePicker.getValue().toString():null);
 		// process and validate delivery info
 		try {
-			if (isRushOrder) {
-				getRController().processDeliveryInfo(messages);
-			} else {
-				getBController().processDeliveryInfo(messages);
-			}
+			getBController().processDeliveryInfo(messages);
 		} catch (InterruptedException e){
 			PopupScreen.error(e.getMessage());
 			return;

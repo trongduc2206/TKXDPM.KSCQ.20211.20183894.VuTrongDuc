@@ -26,10 +26,6 @@ public class PlaceRushOrderController extends PlaceOrderController{
     private static Logger LOGGER = utils.Utils.getLogger(PlaceRushOrderController.class.getName());
     // Vu Trong Duc - 20183894
 
-    public PlaceRushOrderController(Strategy1 strategy1){
-        super(strategy1);
-    }
-
     /**
      * Method kiem tra tinh hop le thong tin giao hang
      * @param info thong tin don giao hang nhanh
@@ -42,7 +38,7 @@ public class PlaceRushOrderController extends PlaceOrderController{
         super.validateDeliveryInfo(info);
         // kiem tra tinh hop le cua tinh/thanh pho
         if(!validateProvince(info.get("province"))) {
-            throw new InterruptedException("Province does not support rush delivery. Please get back to Cart Screen to unselect rush order");
+            throw new InterruptedException("Province does not support rush delivery. Please Click Back button to unselect rush order");
         }
         // kiem tra tinh hop le cua ngay giao hang
         if(!validateDeliveryDate(info.get("date"))) {

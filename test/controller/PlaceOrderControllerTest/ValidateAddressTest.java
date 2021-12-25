@@ -13,8 +13,8 @@ public class ValidateAddressTest {
     private PlaceOrderController placeOrderController;
     @BeforeEach
     void setUp() {
-        Strategy1 strategy1 = new Strategy1();
-        placeOrderController = new PlaceOrderController(strategy1);
+//        Strategy1 strategy1 = new Strategy1();
+        placeOrderController = new PlaceOrderController();
     }
     @ParameterizedTest
     @CsvSource({

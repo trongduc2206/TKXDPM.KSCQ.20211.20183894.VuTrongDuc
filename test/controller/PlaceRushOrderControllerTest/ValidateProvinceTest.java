@@ -14,8 +14,8 @@ public class ValidateProvinceTest {
     private PlaceRushOrderController placeRushOrderController;
     @BeforeEach
     void setUp() {
-        Strategy1 strategy1 = new Strategy1();
-        placeRushOrderController = new PlaceRushOrderController(strategy1);
+//        Strategy1 strategy1 = new Strategy1();
+        placeRushOrderController = new PlaceRushOrderController();
     }
     @ParameterizedTest
     @CsvSource({

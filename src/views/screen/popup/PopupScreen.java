@@ -49,6 +49,10 @@ public class PopupScreen extends BaseScreenHandler{
         return popup(message, Configs.IMAGE_PATH + "/" + "loading.gif", true);
     }
 
+    public static void infor(String message) throws IOException{
+        popup(message, Configs.IMAGE_PATH + "/" + "tickinfor.png", false).show(false);
+    }
+
     public void setImage(String path) {
         super.setImage(tickicon, path);
     }

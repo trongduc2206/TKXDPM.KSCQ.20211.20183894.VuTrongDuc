@@ -2,8 +2,11 @@ package subsystem;
 
 import common.exception.*;
 import entity.payment.CreditCard;
+import entity.payment.PaymentCard;
 import entity.payment.PaymentTransaction;
 import subsystem.interbank.InterbankSubsystemController;
+
+import java.io.IOException;
 
 /***
  * The {@code InterbankSubsystem} class is used to communicate with the
@@ -32,7 +35,7 @@ public class InterbankSubsystem implements InterbankInterface {
 	 * @see InterbankInterface#payOrder(CreditCard, int,
 	 *      String)
 	 */
-	public PaymentTransaction payOrder(CreditCard card, int amount, String contents) throws NotEnoughBalanceException, SuspiciousTransactionException, NotEnoughTransactionInfoException, InvalidVersionException, InternalServerErrorException, InvalidCardException, InvalidTransactionAmountException {
+	public PaymentTransaction payOrder(PaymentCard card, int amount, String contents) throws NotEnoughBalanceException, SuspiciousTransactionException, NotEnoughTransactionInfoException, InvalidVersionException, InternalServerErrorException, InvalidCardException, InvalidTransactionAmountException, IOException {
 		PaymentTransaction transaction = ctrl.payOrder(card, amount, contents);
 		return transaction;
 	}

@@ -98,7 +98,7 @@
                         <Font name="Segoe UI" size="24.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="49.0" prefHeight="20.0" prefWidth="22.0" text="*" textAlignment="CENTER" textFill="#eb0d0d">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="46.0" prefHeight="20.0" prefWidth="22.0" text="*" textAlignment="CENTER" textFill="#eb0d0d">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -140,7 +140,7 @@
             <Font name="Segoe UI Bold" size="24.0" />
          </font>
       </Button>
-      <Label fx:id="backLabel" layoutX="44.0" layoutY="710.0" text="Back" textFill="#5261e4">
+      <Label fx:id="backLabel" layoutX="44.0" layoutY="710.0" text="Get Back" textFill="#5261e4">
          <font>
             <Font size="23.0" />
          </font>
@@ -149,6 +149,12 @@
       <Label fx:id="deliveryDate" layoutX="189.0" layoutY="584.0" text="Delivery Date&#10;">
          <font>
             <Font name="Segoe UI" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="rushLabel" layoutX="1181.0" layoutY="29.0" style="-fx-font-weight: bold; -fx-font-size: 20;" text="Rush Order" textFill="#2969e1" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="170.0" layoutY="585.0" prefHeight="20.0" prefWidth="22.0" text="*" textAlignment="CENTER" textFill="#eb0d0d">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
    </children>

@@ -2,11 +2,13 @@ package subsystem.interbank;
 
 import common.exception.*;
 import entity.payment.CreditCard;
+import entity.payment.PaymentCard;
 import entity.payment.PaymentTransaction;
 import utils.Configs;
 import utils.MyMap;
 import utils.Utils;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class InterbankSubsystemController {
@@ -26,7 +28,8 @@ public class InterbankSubsystemController {
 		return ((MyMap) data).toJSON();
 	}
 
-	public PaymentTransaction payOrder(CreditCard card, int amount, String contents) throws InvalidCardException, NotEnoughBalanceException, NotEnoughTransactionInfoException, InvalidVersionException, InternalServerErrorException, SuspiciousTransactionException, InvalidTransactionAmountException {
+//	public PaymentTransaction payOrder(CreditCard card, int amount, String contents) throws InvalidCardException, NotEnoughBalanceException, NotEnoughTransactionInfoException, InvalidVersionException, InternalServerErrorException, SuspiciousTransactionException, InvalidTransactionAmountException {
+	public PaymentTransaction payOrder(PaymentCard card, int amount, String contents) throws InvalidCardException, NotEnoughBalanceException, NotEnoughTransactionInfoException, InvalidVersionException, InternalServerErrorException, SuspiciousTransactionException, InvalidTransactionAmountException, IOException {
 		Map<String, Object> transaction = new MyMap();
 
 		try {
@@ -60,35 +63,40 @@ public class InterbankSubsystemController {
 	private PaymentTransaction makePaymentTransaction(MyMap response) throws InvalidCardException, NotEnoughBalanceException, InternalServerErrorException, SuspiciousTransactionException, NotEnoughTransactionInfoException, InvalidVersionException, InvalidTransactionAmountException {
 		if (response == null)
 			return null;
-		MyMap transcation = (MyMap) response.get("transaction");
-		CreditCard card = new CreditCard((String) transcation.get("cardCode"), (String) transcation.get("owner"),
-				Integer.parseInt((String) transcation.get("cvvCode")), (String) transcation.get("dateExpired"));
-		PaymentTransaction trans = new PaymentTransaction((String) response.get("errorCode"), card,
-				(String) transcation.get("transactionId"), (String) transcation.get("transactionContent"),
-				Integer.parseInt((String) transcation.get("amount")), (String) transcation.get("createdAt"));
-
-		switch (trans.getErrorCode()) {
-		case "00":
-			break;
-		case "01":
-			throw new InvalidCardException();
-		case "02":
-			throw new NotEnoughBalanceException();
-		case "03":
-			throw new InternalServerErrorException();
-		case "04":
-			throw new SuspiciousTransactionException();
-		case "05":
-			throw new NotEnoughTransactionInfoException();
-		case "06":
-			throw new InvalidVersionException();
-		case "07":
-			throw new InvalidTransactionAmountException();
-		default:
-			throw new UnrecognizedException();
+		String errCode = String.valueOf(response.get("errorCode"));
+		if(errCode.equals("00")) {
+			MyMap transcation = (MyMap) response.get("transaction");
+			CreditCard card = new CreditCard((String) transcation.get("cardCode"), (String) transcation.get("owner"),
+					Integer.parseInt((String) transcation.get("cvvCode")), (String) transcation.get("dateExpired"));
+			PaymentTransaction trans = new PaymentTransaction((String) response.get("errorCode"), card,
+					(String) transcation.get("transactionId"), (String) transcation.get("transactionContent"),
+					Integer.parseInt((String) transcation.get("amount")), (String) transcation.get("createdAt"));
+			return trans;
+		} else {
+			switch (errCode) {
+				case "00":
+					break;
+				case "01":
+					throw new InvalidCardException();
+				case "02":
+					throw new NotEnoughBalanceException();
+				case "03":
+					throw new InternalServerErrorException();
+				case "04":
+					throw new SuspiciousTransactionException();
+				case "05":
+					throw new NotEnoughTransactionInfoException();
+				case "06":
+					throw new InvalidVersionException();
+				case "07":
+					throw new InvalidTransactionAmountException();
+				default:
+					throw new UnrecognizedException();
+			}
+			PaymentTransaction trans = new PaymentTransaction((String) response.get("errorCode"), null, null, null, 0, null);
+			return trans;
 		}
-
-		return trans;
+//		return trans;
 	}
 
 }
