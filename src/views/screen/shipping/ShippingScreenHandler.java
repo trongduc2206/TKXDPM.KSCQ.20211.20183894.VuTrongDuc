@@ -60,6 +60,9 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 	@FXML
 	private Label rushLabel;
 
+	@FXML
+	private ImageView backIcon;
+
 	private Order order;
 
 	private boolean isRushOrder;
@@ -72,12 +75,20 @@ public class ShippingScreenHandler extends BaseScreenHandler implements Initiali
 		Image im = new Image(file.toURI().toString());
 		aimsImage.setImage(im);
 
+		File file1 = new File("assets/images/backarrow.png");
+		Image image = new Image(file1.toURI().toString());
+		backIcon.setImage(image);
+
 		// on mouse clicked, we back to home
 		aimsImage.setOnMouseClicked(e -> {
 			homeScreenHandler.show();
 		});
 
 		backLabel.setOnMouseClicked(e -> {
+			getPreviousScreen().show();
+		});
+
+		backIcon.setOnMouseClicked(e ->{
 			getPreviousScreen().show();
 		});
 
